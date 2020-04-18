@@ -22,8 +22,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './src/*.js',
-      './tests/*.js'
+      './src/**.js',
+	  './src/scripts/**.js',
+      './tests/ManageFunction_tests.js'
     ],
 
 
@@ -35,13 +36,25 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.js': ['coverage']
+	  './src/**.js': ['coverage'],
+      './src/**/*.js': ['coverage'],
+	  './src/scripts/**.js': ['coverage']
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage'],
+	
+	coverageReporter: {
+		includeAllSources: true,
+		dir: 'coverage/',
+		reporters: [
+			{ type: "cobertura", file: 'cobertura-coverage.xml', subdir: "html" },
+			{ type: "html", subdir: "html" },
+			{ type: 'lcovonly', subdir: 'lcov', file: 'lcov.info' }
+		]
+	},
 
 
     // web server port
@@ -63,7 +76,16 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeHeadless'],
+    browsers: ['Chrome', 'Chrome_without_security'],
+	
+	// you can define custom flags
+    customLaunchers: {
+      Chrome_without_security: {
+        base: 'Chrome',
+        flags: ['--disable-web-security', '--disable-site-isolation-trials']
+      }
+    },
+ 
 
 
     // Continuous Integration mode

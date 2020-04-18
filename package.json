@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "karma-cli": "^2.0.0",
+    "karma-junit-reporter": "^2.0.1",
     "karma-sonarqube-reporter": "^1.3.0"
   },
   "devDependencies": {
